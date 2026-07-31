@@ -11,6 +11,7 @@ const ABOUT_CONTENT = {
     heroTitle: "Знания не должны быть статичными. Это интерактивный инструмент.",
     heroLead:
       "Articta — это образовательно-аналитическая платформа нового поколения. Пользователь не просто читает статью, а работает с ней: меняет входные параметры и мгновенно получает пересчитанные результаты.",
+    heroCta: "Открыть модель Братиславы →",
 
     langLabel: "Язык контента:",
 
@@ -61,8 +62,8 @@ const ABOUT_CONTENT = {
       "Для инвесторов, предпринимателей, финансово грамотных специалистов и всех, кто предпочитает прозрачные, проверяемые факты и живые расчеты статичным экспертным мнениям.",
 
     ctaTitle: "Готовы протестировать интерактивную модель?",
-    ctaText: "Откройте наш подробный разбор модели Tesla и изменяйте вводные параметры в реальном времени.",
-    ctaBtn: "Исследовать модель Tesla →",
+    ctaText: "Откройте наш подробный разбор инвестиций в недвижимость Братиславы и изменяйте вводные параметры в реальном времени.",
+    ctaBtn: "Исследовать модель Братиславы →",
     ctaSecondaryBtn: "Вернуться к статьям",
   },
 
@@ -71,6 +72,7 @@ const ABOUT_CONTENT = {
     heroTitle: "Vedomosti nemajú byť statické. Sú interaktívnym nástrojom.",
     heroLead:
       "Articta je vzdelávacia a analytická platforma novej generácie. Používateľ článok len nečíta, ale aktívne s ním pracuje: mení vstupné parametre a okamžite získava prepočítané výsledky.",
+    heroCta: "Otvoriť model Bratislava →",
 
     langLabel: "Jazyk obsahu:",
 
@@ -121,8 +123,8 @@ const ABOUT_CONTENT = {
       "Pre investorov, podnikateľov, finančných analytikov a všetkých, ktorí uprednostňujú transparentné overiteľné fakty a živé výpočty pred statickými názormi.",
 
     ctaTitle: "Pripravení vyskúšať prvý interaktívny model?",
-    ctaText: "Otvorte náš model Tesla a zmeňte vstupné hodnoty v reálnom čase.",
-    ctaBtn: "Preskúmať model Tesla →",
+    ctaText: "Otvorte náš podrobný rozbor investície do nehnuteľností v Bratislave a zmeňte vstupné parametre v reálnom čase.",
+    ctaBtn: "Preskúmať model Bratislava →",
     ctaSecondaryBtn: "Späť na články",
   },
 
@@ -131,6 +133,7 @@ const ABOUT_CONTENT = {
     heroTitle: "Knowledge is not static. It's an interactive tool.",
     heroLead:
       "Articta is a next-generation educational and analytical platform. Users don't just read articles — they actively interact with them by tweaking input parameters and watching recalculated results live.",
+    heroCta: "Open Bratislava Model →",
 
     langLabel: "Content Language:",
 
@@ -181,8 +184,8 @@ const ABOUT_CONTENT = {
       "For investors, analysts, founders, and curious minds who value verifiable facts and dynamic modeling over static opinion pieces.",
 
     ctaTitle: "Ready to explore your first interactive model?",
-    ctaText: "Check out our Tesla Valuation Model and start tweaking assumptions live.",
-    ctaBtn: "Explore Tesla Model →",
+    ctaText: "Open our detailed Bratislava Real Estate Investment model and start tweaking assumptions live.",
+    ctaBtn: "Explore Bratislava Model →",
     ctaSecondaryBtn: "Browse Articles",
   },
 };
@@ -218,6 +221,11 @@ export default function AboutPage() {
           <span className="static-badge">{content.badge}</span>
           <h1 className="static-title">{content.heroTitle}</h1>
           <p className="static-lead">{content.heroLead}</p>
+          <div className="about-cta-buttons" style={{ marginTop: "1.25rem" }}>
+            <Link href="/articles/bratislava" className="static-primary-btn">
+              {content.heroCta}
+            </Link>
+          </div>
         </div>
 
         <hr className="article-divider" />
@@ -271,7 +279,7 @@ export default function AboutPage() {
           <h2>{content.ctaTitle}</h2>
           <p>{content.ctaText}</p>
           <div className="about-cta-buttons">
-            <Link href="/articles/tesla" className="static-primary-btn">
+            <Link href="/articles/bratislava" className="static-primary-btn">
               {content.ctaBtn}
             </Link>
             <Link href="/" className="about-secondary-btn">
