@@ -112,6 +112,12 @@ export const translations = {
     roiInitialPostTax: "↳ с учетом налога от найма (%)",
     roiTotalPreTax: "2. ROI со всего вложенного капитала за 5 лет (до налога, %)",
     roiTotalPostTax: "↳ с учетом налога от найма (%)",
+
+    executiveSummaryTitle: "Чистая прибыль и ROI за 5 лет",
+    executiveSummarySub: "Итоговый результат с учётом абсолютно всех расходов, ипотеки, аренды и налогов",
+    toggleDetailsShow: "Показать подробную детализацию расходов ↓",
+    toggleDetailsHide: "Скрыть подробную детализацию ↑",
+    profitFormulaTitle: "Из чего формируется ваш чистый доход:",
   },
 
   sk: {
@@ -220,10 +226,16 @@ export const translations = {
     totalInvested: "− CELKOVO INVESTOVANÉ Z VLASTNÉHO (Akontácia+Poplatky+Rekonštrukcia+Splátky/Energie/Dane)",
     netProfit: "ČISTÝ ZISK (Zisk nad rámec všetkých investovaných peňazí)",
 
-    roiInitialPreTax: "1. ROI z počiatočnej investície (pred daňou, %)",
+    roiInitialPreTax: "1. ROI z prvej investície (pred daňou, %)",
     roiInitialPostTax: "↳ po zohľadnení dane z prenájmu (%)",
     roiTotalPreTax: "2. ROI z celkového investovaného kapitálu za 5 rokov (pred daňou, %)",
     roiTotalPostTax: "↳ po zohľadnení dane z prenájmu (%)",
+
+    executiveSummaryTitle: "Čistý zisk a ROI za 5 rokov",
+    executiveSummarySub: "Konečný výsledok po zohľadnení všetkých výdavkov, hypotéky, nájmu a daní",
+    toggleDetailsShow: "Zobraziť podrobnú kalkuláciu ↓",
+    toggleDetailsHide: "Skryť podrobnú kalkuláciu ↑",
+    profitFormulaTitle: "Z čoho sa skladá váš čistý zisk:",
   },
 
   en: {
@@ -336,6 +348,12 @@ export const translations = {
     roiInitialPostTax: "↳ including rental tax (%)",
     roiTotalPreTax: "2. Total 5-Year Outlay ROI (Pre-tax, %)",
     roiTotalPostTax: "↳ including rental tax (%)",
+
+    executiveSummaryTitle: "5-Year Net Profit & ROI Breakdown",
+    executiveSummarySub: "Final investment yield after all expenses, mortgage, rental income, and taxes",
+    toggleDetailsShow: "Show Detailed Financial Breakdown ↓",
+    toggleDetailsHide: "Hide Detailed Breakdown ↑",
+    profitFormulaTitle: "How Your Net Profit is Formed:",
   },
 };
 

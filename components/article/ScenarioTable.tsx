@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { formatResult } from "@/lib/formatValue";
 import { useAnimatedNumber } from "@/hooks/useAnimatedNumber";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -14,6 +15,7 @@ interface ScenarioTableProps {
 export function ScenarioTable({ title, results }: ScenarioTableProps) {
   const { language } = useLanguage();
   const t = getTranslation(language);
+  const [showFullDetails, setShowFullDetails] = useState(false);
 
   // Mortgage & 5-Year Expenses Breakdown
   const principalPaid5y = useAnimatedNumber(results.principalPaid5y ?? 0, 400);
@@ -78,10 +80,83 @@ export function ScenarioTable({ title, results }: ScenarioTableProps) {
 
   return (
     <div className="scenario-table-container">
-      <div className="scenario-table-title">{title}</div>
+      {/* Dashboard Section Title */}
+      <div className="profit-hero-header">
+        <span className="profit-hero-badge">📊 Итоговая окупаемость</span>
+        <h2 className="profit-hero-title">{t.executiveSummaryTitle || "Чистая прибыль и ROI за 5 лет"}</h2>
+        <p className="profit-hero-sub">{t.executiveSummarySub || "Итоговый результат с учётом абсолютно всех расходов, ипотеки, аренды и налогов"}</p>
+      </div>
 
-      {/* Summary Breakdown Cards */}
-      <div className="scenario-summary-breakdown">
+      {/* 3 Executive Scenario KPI Cards */}
+      <div className="profit-scenario-cards">
+        {/* Bad Scenario Card */}
+        <div className="profit-card scenario-bad">
+          <div className="profit-card-tag">{t.scenarioBad} (2.0%/год)</div>
+          <div className="profit-card-label">Чистая прибыль за 5 лет</div>
+          <div className={`profit-card-value ${badNetProfit < 0 ? "negative" : "positive"}`}>
+            {badNetProfit >= 0 ? "+" : ""}€{formatResult(badNetProfit)}
+          </div>
+          <div className="profit-card-roi">
+            <span>ROI со стартовых:</span>
+            <strong>{badRoiInitialPostTax >= 0 ? "+" : ""}{formatResult(badRoiInitialPostTax)}%</strong>
+          </div>
+        </div>
+
+        {/* Base Scenario Card (Featured) */}
+        <div className="profit-card scenario-base featured">
+          <div className="profit-card-featured-badge">★ {t.scenarioBase} расчёт (4.5%/год)</div>
+          <div className="profit-card-label">Чистая прибыль за 5 лет</div>
+          <div className={`profit-card-value primary ${baseNetProfit < 0 ? "negative" : "positive"}`}>
+            {baseNetProfit >= 0 ? "+" : ""}€{formatResult(baseNetProfit)}
+          </div>
+          <div className="profit-card-roi-hero">
+            <span className="roi-badge">ROI: {baseRoiInitialPostTax >= 0 ? "+" : ""}{formatResult(baseRoiInitialPostTax)}%</span>
+            <span className="roi-sub">на вложенный капитал</span>
+          </div>
+        </div>
+
+        {/* Good Scenario Card */}
+        <div className="profit-card scenario-good">
+          <div className="profit-card-tag">{t.scenarioGood} (7.0%/год)</div>
+          <div className="profit-card-label">Чистая прибыль за 5 лет</div>
+          <div className={`profit-card-value ${goodNetProfit < 0 ? "negative" : "positive"}`}>
+            {goodNetProfit >= 0 ? "+" : ""}€{formatResult(goodNetProfit)}
+          </div>
+          <div className="profit-card-roi">
+            <span>ROI со стартовых:</span>
+            <strong>{goodRoiInitialPostTax >= 0 ? "+" : ""}{formatResult(goodRoiInitialPostTax)}%</strong>
+          </div>
+        </div>
+      </div>
+
+      {/* Visual Profit Flow Waterfall */}
+      <div className="profit-flow-box">
+        <div className="profit-flow-title">{t.profitFormulaTitle || "Из чего формируется ваш чистый доход:"}</div>
+        <div className="profit-flow-items">
+          <div className="flow-item">
+            <span className="flow-num font-mono">€{formatResult(totalAllOutPocket5y)}</span>
+            <span className="flow-label">Вложено из кармана</span>
+          </div>
+          <div className="flow-arrow">→</div>
+          <div className="flow-item highlight">
+            <span className="flow-num font-mono">+€{formatResult(baseNetProceeds)}</span>
+            <span className="flow-label">Капитал в объекте</span>
+          </div>
+          <div className="flow-plus">+</div>
+          <div className="flow-item highlight">
+            <span className="flow-num font-mono">+€{formatResult(totalRentIncome5y + taxRefund5y)}</span>
+            <span className="flow-label">Аренда + Возврат налогов</span>
+          </div>
+          <div className="flow-equals">=</div>
+          <div className="flow-item total">
+            <span className="flow-num font-mono">+€{formatResult(baseNetProfit)}</span>
+            <span className="flow-label">Чистая прибыль</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Summary Breakdown Cards (Monthly Cash Flow & Out-of-Pocket) */}
+      <div className="scenario-summary-breakdown" style={{ marginTop: "1.75rem" }}>
         <div className="breakdown-box">
           <div className="breakdown-title">{t.monthlyCashFlowTitle}</div>
           <div className="breakdown-row">
@@ -167,168 +242,182 @@ export function ScenarioTable({ title, results }: ScenarioTableProps) {
         </div>
       </div>
 
-      {/* Scenarios Comparison Table */}
-      <div className="scenario-table-wrapper">
-        <table className="scenario-table">
-          <thead>
-            <tr>
-              <th className="cell-metric">{t.tableHeaderMetric}</th>
-              <th className="cell-scenario bad">{t.scenarioBad}</th>
-              <th className="cell-scenario base">{t.scenarioBase}</th>
-              <th className="cell-scenario good">{t.scenarioGood}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="cell-metric">{t.salePrice5y}</td>
-              <td className="nowrap">€{formatResult(badPrice5y)}</td>
-              <td className="nowrap">€{formatResult(basePrice5y)}</td>
-              <td className="nowrap">€{formatResult(goodPrice5y)}</td>
-            </tr>
-            <tr>
-              <td className="cell-metric">{t.loanBalancePayoff}</td>
-              <td className="negative nowrap">−€{formatResult(remainingLoanBalance)}</td>
-              <td className="negative nowrap">−€{formatResult(remainingLoanBalance)}</td>
-              <td className="negative nowrap">−€{formatResult(remainingLoanBalance)}</td>
-            </tr>
-            <tr className="row-total-inflow">
-              <td className="cell-metric">{t.netProceedsOnSale}</td>
-              <td className="positive nowrap">€{formatResult(badNetProceeds)}</td>
-              <td className="positive nowrap">€{formatResult(baseNetProceeds)}</td>
-              <td className="positive nowrap">€{formatResult(goodNetProceeds)}</td>
-            </tr>
-            <tr>
-              <td className="cell-metric">{t.rentIncome5y}</td>
-              <td className="positive nowrap">+€{formatResult(totalRentIncome5y)}</td>
-              <td className="positive nowrap">+€{formatResult(totalRentIncome5y)}</td>
-              <td className="positive nowrap">+€{formatResult(totalRentIncome5y)}</td>
-            </tr>
-            <tr>
-              <td className="cell-metric">{t.taxRefund5y}</td>
-              <td className="positive nowrap">+€{formatResult(taxRefund5y)}</td>
-              <td className="positive nowrap">+€{formatResult(taxRefund5y)}</td>
-              <td className="positive nowrap">+€{formatResult(taxRefund5y)}</td>
-            </tr>
-
-            {/* Outflows Breakdown */}
-            <tr className="row-subhead">
-              <td colSpan={4} className="subhead-title">{t.unrecoverableExpensesTitle}</td>
-            </tr>
-            <tr>
-              <td className="cell-metric">{t.interestPaid5y}</td>
-              <td className="negative nowrap">−€{formatResult(interestPaid5y)}</td>
-              <td className="negative nowrap">−€{formatResult(interestPaid5y)}</td>
-              <td className="negative nowrap">−€{formatResult(interestPaid5y)}</td>
-            </tr>
-            <tr>
-              <td className="cell-metric">{t.utilitiesInsurance5y}</td>
-              <td className="negative nowrap">−€{formatResult(utilitiesAndInsurance5y)}</td>
-              <td className="negative nowrap">−€{formatResult(utilitiesAndInsurance5y)}</td>
-              <td className="negative nowrap">−€{formatResult(utilitiesAndInsurance5y)}</td>
-            </tr>
-            <tr>
-              <td className="cell-metric">{t.rentalTax5y}</td>
-              <td className="negative nowrap">−€{formatResult(rentalIncomeTax5y)}</td>
-              <td className="negative nowrap">−€{formatResult(rentalIncomeTax5y)}</td>
-              <td className="negative nowrap">−€{formatResult(rentalIncomeTax5y)}</td>
-            </tr>
-            <tr>
-              <td className="cell-metric">{t.oneTimeExpenses}</td>
-              <td className="negative nowrap">−€{formatResult(oneTimeExpenses)}</td>
-              <td className="negative nowrap">−€{formatResult(oneTimeExpenses)}</td>
-              <td className="negative nowrap">−€{formatResult(oneTimeExpenses)}</td>
-            </tr>
-            <tr>
-              <td className="cell-metric">{t.renovationCost}</td>
-              <td className="negative nowrap">−€{formatResult(renovationCost)}</td>
-              <td className="negative nowrap">−€{formatResult(renovationCost)}</td>
-              <td className="negative nowrap">−€{formatResult(renovationCost)}</td>
-            </tr>
-
-            <tr className="row-total-inflow">
-              <td className="cell-metric">{t.totalCashReceived}</td>
-              <td className="positive nowrap">€{formatResult(badTotalCashReceived)}</td>
-              <td className="positive nowrap">€{formatResult(baseTotalCashReceived)}</td>
-              <td className="positive nowrap">€{formatResult(goodTotalCashReceived)}</td>
-            </tr>
-            <tr className="row-total-outflow">
-              <td className="cell-metric">{t.totalInvested}</td>
-              <td className="negative nowrap">−€{formatResult(totalAllOutPocket5y)}</td>
-              <td className="negative nowrap">−€{formatResult(totalAllOutPocket5y)}</td>
-              <td className="negative nowrap">−€{formatResult(totalAllOutPocket5y)}</td>
-            </tr>
-
-            {/* Final Net Results */}
-            <tr className="row-profit">
-              <td className="cell-metric">{t.netProfit}</td>
-              <td className={badNetProfit < 0 ? "negative nowrap" : "positive nowrap"}>
-                €{formatResult(badNetProfit)}
-              </td>
-              <td className={baseNetProfit < 0 ? "negative nowrap" : "positive nowrap"}>
-                €{formatResult(baseNetProfit)}
-              </td>
-              <td className={goodNetProfit < 0 ? "negative nowrap" : "positive nowrap"}>
-                €{formatResult(goodNetProfit)}
-              </td>
-            </tr>
-
-            {/* 1) INITIAL EQUITY ROI (Pre-Tax & Post-Tax) */}
-            <tr className="row-roi">
-              <td className="cell-metric">{t.roiInitialPreTax}</td>
-              <td className={badRoiInitialPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(badRoiInitialPreTax)}%
-              </td>
-              <td className={baseRoiInitialPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(baseRoiInitialPreTax)}%
-              </td>
-              <td className={goodRoiInitialPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(goodRoiInitialPreTax)}%
-              </td>
-            </tr>
-            <tr className="row-roi row-roi-total">
-              <td className="cell-metric">{t.roiInitialPostTax}</td>
-              <td className={badRoiInitialPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(badRoiInitialPostTax)}%
-              </td>
-              <td className={baseRoiInitialPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(baseRoiInitialPostTax)}%
-              </td>
-              <td className={goodRoiInitialPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(goodRoiInitialPostTax)}%
-              </td>
-            </tr>
-
-            {/* 2) TOTAL OUTLAY ROI (Pre-Tax & Post-Tax) */}
-            <tr className="row-roi" style={{ borderTop: "2px solid var(--border)" }}>
-              <td className="cell-metric">{t.roiTotalPreTax}</td>
-              <td className={badRoiTotalPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(badRoiTotalPreTax)}%
-              </td>
-              <td className={baseRoiTotalPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(baseRoiTotalPreTax)}%
-              </td>
-              <td className={goodRoiTotalPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(goodRoiTotalPreTax)}%
-              </td>
-            </tr>
-            <tr className="row-roi row-roi-total">
-              <td className="cell-metric">{t.roiTotalPostTax}</td>
-              <td className={badRoiTotalPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(badRoiTotalPostTax)}%
-              </td>
-              <td className={baseRoiTotalPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(baseRoiTotalPostTax)}%
-              </td>
-              <td className={goodRoiTotalPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
-                {formatResult(goodRoiTotalPostTax)}%
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      {/* ROI 5-Year Dynamics Chart (X: Years, Y: Euros) */}
+      <div style={{ marginTop: "2rem" }}>
+        <RoiGrowthChart results={results} />
       </div>
 
-      {/* ROI 5-Year Dynamics Chart (X: Years, Y: Euros) */}
-      <RoiGrowthChart results={results} />
+      {/* Toggle Details Button for Full Table */}
+      <div style={{ textAlign: "center", marginTop: "2rem", marginBottom: "1rem" }}>
+        <button
+          onClick={() => setShowFullDetails((prev) => !prev)}
+          className="profit-details-toggle-btn"
+        >
+          {showFullDetails ? t.toggleDetailsHide : t.toggleDetailsShow}
+        </button>
+      </div>
+
+      {/* Collapsible Scenarios Comparison Table */}
+      {showFullDetails && (
+        <div className="scenario-table-wrapper" style={{ marginTop: "1rem" }}>
+          <table className="scenario-table">
+            <thead>
+              <tr>
+                <th className="cell-metric">{t.tableHeaderMetric}</th>
+                <th className="cell-scenario bad">{t.scenarioBad}</th>
+                <th className="cell-scenario base">{t.scenarioBase}</th>
+                <th className="cell-scenario good">{t.scenarioGood}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="cell-metric">{t.salePrice5y}</td>
+                <td className="nowrap">€{formatResult(badPrice5y)}</td>
+                <td className="nowrap">€{formatResult(basePrice5y)}</td>
+                <td className="nowrap">€{formatResult(goodPrice5y)}</td>
+              </tr>
+              <tr>
+                <td className="cell-metric">{t.loanBalancePayoff}</td>
+                <td className="negative nowrap">−€{formatResult(remainingLoanBalance)}</td>
+                <td className="negative nowrap">−€{formatResult(remainingLoanBalance)}</td>
+                <td className="negative nowrap">−€{formatResult(remainingLoanBalance)}</td>
+              </tr>
+              <tr className="row-total-inflow">
+                <td className="cell-metric">{t.netProceedsOnSale}</td>
+                <td className="positive nowrap">€{formatResult(badNetProceeds)}</td>
+                <td className="positive nowrap">€{formatResult(baseNetProceeds)}</td>
+                <td className="positive nowrap">€{formatResult(goodNetProceeds)}</td>
+              </tr>
+              <tr>
+                <td className="cell-metric">{t.rentIncome5y}</td>
+                <td className="positive nowrap">+€{formatResult(totalRentIncome5y)}</td>
+                <td className="positive nowrap">+€{formatResult(totalRentIncome5y)}</td>
+                <td className="positive nowrap">+€{formatResult(totalRentIncome5y)}</td>
+              </tr>
+              <tr>
+                <td className="cell-metric">{t.taxRefund5y}</td>
+                <td className="positive nowrap">+€{formatResult(taxRefund5y)}</td>
+                <td className="positive nowrap">+€{formatResult(taxRefund5y)}</td>
+                <td className="positive nowrap">+€{formatResult(taxRefund5y)}</td>
+              </tr>
+
+              {/* Outflows Breakdown */}
+              <tr className="row-subhead">
+                <td colSpan={4} className="subhead-title">{t.unrecoverableExpensesTitle}</td>
+              </tr>
+              <tr>
+                <td className="cell-metric">{t.interestPaid5y}</td>
+                <td className="negative nowrap">−€{formatResult(interestPaid5y)}</td>
+                <td className="negative nowrap">−€{formatResult(interestPaid5y)}</td>
+                <td className="negative nowrap">−€{formatResult(interestPaid5y)}</td>
+              </tr>
+              <tr>
+                <td className="cell-metric">{t.utilitiesInsurance5y}</td>
+                <td className="negative nowrap">−€{formatResult(utilitiesAndInsurance5y)}</td>
+                <td className="negative nowrap">−€{formatResult(utilitiesAndInsurance5y)}</td>
+                <td className="negative nowrap">−€{formatResult(utilitiesAndInsurance5y)}</td>
+              </tr>
+              <tr>
+                <td className="cell-metric">{t.rentalTax5y}</td>
+                <td className="negative nowrap">−€{formatResult(rentalIncomeTax5y)}</td>
+                <td className="negative nowrap">−€{formatResult(rentalIncomeTax5y)}</td>
+                <td className="negative nowrap">−€{formatResult(rentalIncomeTax5y)}</td>
+              </tr>
+              <tr>
+                <td className="cell-metric">{t.oneTimeExpenses}</td>
+                <td className="negative nowrap">−€{formatResult(oneTimeExpenses)}</td>
+                <td className="negative nowrap">−€{formatResult(oneTimeExpenses)}</td>
+                <td className="negative nowrap">−€{formatResult(oneTimeExpenses)}</td>
+              </tr>
+              <tr>
+                <td className="cell-metric">{t.renovationCost}</td>
+                <td className="negative nowrap">−€{formatResult(renovationCost)}</td>
+                <td className="negative nowrap">−€{formatResult(renovationCost)}</td>
+                <td className="negative nowrap">−€{formatResult(renovationCost)}</td>
+              </tr>
+
+              <tr className="row-total-inflow">
+                <td className="cell-metric">{t.totalCashReceived}</td>
+                <td className="positive nowrap">€{formatResult(badTotalCashReceived)}</td>
+                <td className="positive nowrap">€{formatResult(baseTotalCashReceived)}</td>
+                <td className="positive nowrap">€{formatResult(goodTotalCashReceived)}</td>
+              </tr>
+              <tr className="row-total-outflow">
+                <td className="cell-metric">{t.totalInvested}</td>
+                <td className="negative nowrap">−€{formatResult(totalAllOutPocket5y)}</td>
+                <td className="negative nowrap">−€{formatResult(totalAllOutPocket5y)}</td>
+                <td className="negative nowrap">−€{formatResult(totalAllOutPocket5y)}</td>
+              </tr>
+
+              {/* Final Net Results */}
+              <tr className="row-profit">
+                <td className="cell-metric">{t.netProfit}</td>
+                <td className={badNetProfit < 0 ? "negative nowrap" : "positive nowrap"}>
+                  €{formatResult(badNetProfit)}
+                </td>
+                <td className={baseNetProfit < 0 ? "negative nowrap" : "positive nowrap"}>
+                  €{formatResult(baseNetProfit)}
+                </td>
+                <td className={goodNetProfit < 0 ? "negative nowrap" : "positive nowrap"}>
+                  €{formatResult(goodNetProfit)}
+                </td>
+              </tr>
+
+              {/* 1) INITIAL EQUITY ROI (Pre-Tax & Post-Tax) */}
+              <tr className="row-roi">
+                <td className="cell-metric">{t.roiInitialPreTax}</td>
+                <td className={badRoiInitialPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(badRoiInitialPreTax)}%
+                </td>
+                <td className={baseRoiInitialPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(baseRoiInitialPreTax)}%
+                </td>
+                <td className={goodRoiInitialPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(goodRoiInitialPreTax)}%
+                </td>
+              </tr>
+              <tr className="row-roi row-roi-total">
+                <td className="cell-metric">{t.roiInitialPostTax}</td>
+                <td className={badRoiInitialPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(badRoiInitialPostTax)}%
+                </td>
+                <td className={baseRoiInitialPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(baseRoiInitialPostTax)}%
+                </td>
+                <td className={goodRoiInitialPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(goodRoiInitialPostTax)}%
+                </td>
+              </tr>
+
+              {/* 2) TOTAL OUTLAY ROI (Pre-Tax & Post-Tax) */}
+              <tr className="row-roi" style={{ borderTop: "2px solid var(--border)" }}>
+                <td className="cell-metric">{t.roiTotalPreTax}</td>
+                <td className={badRoiTotalPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(badRoiTotalPreTax)}%
+                </td>
+                <td className={baseRoiTotalPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(baseRoiTotalPreTax)}%
+                </td>
+                <td className={goodRoiTotalPreTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(goodRoiTotalPreTax)}%
+                </td>
+              </tr>
+              <tr className="row-roi row-roi-total">
+                <td className="cell-metric">{t.roiTotalPostTax}</td>
+                <td className={badRoiTotalPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(badRoiTotalPostTax)}%
+                </td>
+                <td className={baseRoiTotalPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(baseRoiTotalPostTax)}%
+                </td>
+                <td className={goodRoiTotalPostTax < 0 ? "negative nowrap" : "positive nowrap"}>
+                  {formatResult(goodRoiTotalPostTax)}%
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

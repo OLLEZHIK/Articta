@@ -19,6 +19,7 @@ import { ArticleFeedback } from "./ArticleFeedback";
 import { ArticleMetaBadge } from "./ArticleMetaBadge";
 import { ExpensesGrid } from "./ExpensesGrid";
 import { ClosingFeesGrid } from "./ClosingFeesGrid";
+import { StickyVariableDock } from "./StickyVariableDock";
 
 import { useLanguage } from "@/components/LanguageProvider";
 import { getBratislavaArticle } from "@/content/bratislava/article";
@@ -278,6 +279,16 @@ export function ArticleRenderer({ article, articleSlug = "bratislava" }: Article
           onStopComparing={stopComparing}
         />
       </div>
+
+      {/* Sticky Floating Dock for Variable Controls & Hold-to-Compare */}
+      <StickyVariableDock
+        variables={variables}
+        hasHistory={hasHistory}
+        isComparing={isComparing}
+        onResetAll={resetAll}
+        onStartComparing={startComparing}
+        onStopComparing={stopComparing}
+      />
     </>
   );
 }

@@ -4628,3 +4628,379 @@ button {
 .drawer-theme-toggle:hover {
   background: var(--border);
 }
+
+/* ===================== Executive Net Profit Dashboard ===================== */
+
+.profit-hero-header {
+  margin-bottom: 1.5rem;
+}
+
+.profit-hero-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  border: 1px solid var(--variable-border);
+  margin-bottom: 0.5rem;
+}
+
+.profit-hero-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  margin: 0 0 0.35rem 0;
+}
+
+.profit-hero-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* 3 Scenario Cards Grid */
+.profit-scenario-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .profit-scenario-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.profit-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.65rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.profit-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.profit-card.featured {
+  background: linear-gradient(145deg, var(--card-bg) 0%, rgba(37, 99, 235, 0.06) 100%);
+  border: 2px solid var(--primary);
+  box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.15);
+}
+
+.profit-card-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.profit-card-featured-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  align-self: flex-start;
+}
+
+.profit-card-label {
+  font-size: 0.825rem;
+  color: var(--muted);
+}
+
+.profit-card-value {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.profit-card-value.positive {
+  color: #10b981;
+}
+
+.profit-card-value.negative {
+  color: #ef4444;
+}
+
+.profit-card-value.primary {
+  color: var(--primary);
+}
+
+.profit-card-roi {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.825rem;
+  color: var(--muted);
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.5rem;
+}
+
+.profit-card-roi strong {
+  color: var(--foreground);
+}
+
+.profit-card-roi-hero {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.65rem;
+}
+
+.profit-card-roi-hero .roi-badge {
+  background: var(--primary);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+}
+
+.profit-card-roi-hero .roi-sub {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Profit Waterfall Visual Flow Box */
+.profit-flow-box {
+  background: var(--border-subtle);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.profit-flow-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.profit-flow-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.flow-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  background: var(--card-bg);
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  flex: 1;
+  min-width: 120px;
+}
+
+.flow-item.highlight {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.flow-item.total {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.flow-num {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+.flow-item.total .flow-num {
+  color: var(--primary);
+  font-size: 1.15rem;
+}
+
+.flow-label {
+  font-size: 0.725rem;
+  color: var(--muted);
+}
+
+.flow-arrow,
+.flow-plus,
+.flow-equals {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+/* Toggle Details Button */
+.profit-details-toggle-btn {
+  background: var(--border-subtle);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profit-details-toggle-btn:hover {
+  background: var(--border);
+  border-color: var(--border-hover);
+}
+
+/* ===================== Floating Sticky Variable Dock & Hold Button ===================== */
+
+.sticky-variable-dock-wrapper {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 900;
+  pointer-events: none; /* Only dock container receives pointer events */
+  width: auto;
+  max-width: 90vw;
+}
+
+.sticky-variable-dock {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(8, 12, 22, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-hover);
+  border-radius: 9999px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme="light"] .sticky-variable-dock {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.sticky-variable-dock.comparing-mode {
+  border-color: #f59e0b;
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+  transform: scale(1.02);
+}
+
+.dock-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+.dock-stat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.dock-stat-text {
+  font-size: 0.8rem;
+  color: var(--foreground);
+}
+
+.dock-reset-btn {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+}
+
+.dock-reset-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+}
+
+/* Hold to Compare Button */
+.dock-hold-btn {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  background: var(--primary);
+  color: white;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.dock-hold-btn:active,
+.dock-hold-btn.active {
+  background: #f59e0b;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+  transform: scale(0.96);
+}
+
+@media (max-width: 768px) {
+  .sticky-variable-dock-wrapper {
+    bottom: 1rem;
+    max-width: 95vw;
+  }
+
+  .sticky-variable-dock {
+    padding: 0.4rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .dock-stat-text {
+    font-size: 0.725rem;
+  }
+
+  .dock-hold-btn {
+    font-size: 0.725rem;
+    padding: 0.35rem 0.7rem;
+  }
+}
