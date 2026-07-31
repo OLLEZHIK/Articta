@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
-import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -56,7 +55,6 @@ export default function RootLayout({
         <LanguageProvider>
           <ThemeProvider>
             {children}
-            <MobileBottomBar />
           </ThemeProvider>
         </LanguageProvider>
       </body>
