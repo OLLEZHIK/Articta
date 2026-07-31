@@ -15,7 +15,7 @@ interface ScenarioTableProps {
 export function ScenarioTable({ title, results }: ScenarioTableProps) {
   const { language } = useLanguage();
   const t = getTranslation(language);
-  const [showFullDetails, setShowFullDetails] = useState(false);
+  const [showFullDetails, setShowFullDetails] = useState(true);
 
   // Mortgage & 5-Year Expenses Breakdown
   const principalPaid5y = useAnimatedNumber(results.principalPaid5y ?? 0, 400);

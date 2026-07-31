@@ -4853,6 +4853,12 @@ button {
 
 /* ===================== Floating Sticky Variable Dock & Hold Button ===================== */
 
+@media (min-width: 769px) {
+  .sticky-variable-dock-wrapper {
+    display: none !important;
+  }
+}
+
 .sticky-variable-dock-wrapper {
   position: fixed;
   bottom: 1.5rem;
