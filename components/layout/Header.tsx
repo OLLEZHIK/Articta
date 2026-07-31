@@ -7,12 +7,14 @@ import { useTheme } from "@/components/ThemeProvider";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useLanguage } from "@/components/LanguageProvider";
 import { Language, LANGUAGES } from "@/types/language";
+import { getTranslation } from "@/lib/i18n";
 
 export function Header() {
   const { theme, toggleTheme } = useTheme();
   const { language, setLanguage } = useLanguage();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const t = getTranslation(language);
 
   // Close mobile drawer on route change or Escape key
   useEffect(() => {
@@ -36,10 +38,50 @@ export function Header() {
   }, [isMobileMenuOpen]);
 
   const navLabels = {
-    ru: { home: "Главная", articles: "Модели и Статьи", blog: "Блог", about: "О платформе", logoBadge: "О проекте" },
-    sk: { home: "Domov", articles: "Modely a Články", blog: "Blog", about: "O platforme", logoBadge: "O projekte" },
-    en: { home: "Home", articles: "Models & Articles", blog: "Blog", about: "About Platform", logoBadge: "About" },
-  }[language] || { home: "Главная", articles: "Модели и Статьи", blog: "Блог", about: "О платформе", logoBadge: "О проекте" };
+    ru: {
+      home: "Главная",
+      articles: "Модели и Статьи",
+      blog: "Блог",
+      about: "О платформе",
+      logoBadge: "О проекте",
+      langTitle: "Язык контента",
+      themeTitle: "Тема оформления",
+      darkTheme: "🌙 Тёмная тема",
+      lightTheme: "☀️ Светлая тема",
+    },
+    sk: {
+      home: "Domov",
+      articles: "Modely a Články",
+      blog: "Blog",
+      about: "O platforme",
+      logoBadge: "O projekte",
+      langTitle: "Jazyk obsahu",
+      themeTitle: "Téma zobrazenia",
+      darkTheme: "🌙 Tmavý režim",
+      lightTheme: "☀️ Svetlý režim",
+    },
+    en: {
+      home: "Home",
+      articles: "Models & Articles",
+      blog: "Blog",
+      about: "About Platform",
+      logoBadge: "About",
+      langTitle: "Language",
+      themeTitle: "Theme",
+      darkTheme: "🌙 Dark Mode",
+      lightTheme: "☀️ Light Mode",
+    },
+  }[language] || {
+    home: "Главная",
+    articles: "Модели и Статьи",
+    blog: "Блог",
+    about: "О платформе",
+    logoBadge: "О проекте",
+    langTitle: "Язык контента",
+    themeTitle: "Тема оформления",
+    darkTheme: "🌙 Тёмная тема",
+    lightTheme: "☀️ Светлая тема",
+  };
 
   return (
     <>
@@ -117,6 +159,25 @@ export function Header() {
                   <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                 </svg>
               )}
+            </button>
+
+            {/* Share */}
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                alert(t.copied || "Copied!");
+              }}
+              className="header-share-btn"
+              title={t.share}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span>{t.share || "Share"}</span>
             </button>
 
             {/* Mobile Hamburger Button */}
@@ -219,7 +280,7 @@ export function Header() {
 
             {/* Language & Preferences in Drawer */}
             <div className="drawer-footer">
-              <div className="drawer-section-title">Язык / Language</div>
+              <div className="drawer-section-title">{navLabels.langTitle}</div>
               <div className="drawer-lang-tabs">
                 {LANGUAGES.map((lang) => (
                   <button
@@ -232,12 +293,12 @@ export function Header() {
                 ))}
               </div>
 
-              <div className="drawer-section-title" style={{ marginTop: "1rem" }}>Тема / Theme</div>
+              <div className="drawer-section-title" style={{ marginTop: "1rem" }}>{navLabels.themeTitle}</div>
               <button
                 onClick={toggleTheme}
                 className="drawer-theme-toggle"
               >
-                {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+                {theme === "light" ? navLabels.darkTheme : navLabels.lightTheme}
               </button>
             </div>
           </aside>

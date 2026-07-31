@@ -3,7 +3,6 @@
 import { Header } from "@/components/layout/Header";
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
-import { Language } from "@/types/language";
 
 const HOME_CONTENT = {
   ru: {
@@ -12,15 +11,16 @@ const HOME_CONTENT = {
     heroLead:
       "Articta превращает финансовые статьи и аналитические разборы в интерактивные инструменты. Меняйте параметры прямо в тексте и получайте персональные расчеты.",
     ctaPrimary: "Открыть модель Братиславы →",
-    ctaSecondary: "О проекте",
+    ctaSecondary: "О платформе",
 
     featuredTitle: "Интерактивные исследования и модели",
     featuredSub: "Выберите материал для детального анализа и перерасчета на ваших вводных данных",
+    cardCta: "Интерактивный перерасчет →",
 
     articles: [
       {
         slug: "bratislava",
-        category: "Finance",
+        category: "Финансы",
         categoryColor: "#2563eb",
         title: "Инвестиции в недвижимость в Братиславе. Расчет ROI за 5 лет",
         desc: "Полный экономический разбор покупки 2-комнатной квартиры: ипотека, налоговый вычет, ремонт в стиле Pinterest, доход от аренды и итоговая чистая прибыль.",
@@ -30,7 +30,7 @@ const HOME_CONTENT = {
       },
       {
         slug: "tesla",
-        category: "Technology / Finance",
+        category: "Технологии / Финансы",
         categoryColor: "#06b6d4",
         title: "Оценка стоимости компании Tesla. Интерактивная DCF-модель",
         desc: "Анализ денежных потоков Tesla: моделирование выручки, маржинальности FSD, Robotaxi и ставки дисконтирования с онлайн-перерасчетом целевой цены акций.",
@@ -66,15 +66,16 @@ const HOME_CONTENT = {
     heroLead:
       "Articta mení finančné články a analytické rozbory na interaktívne nástroje. Zmeňte parametre priamo v texte a získajte vlastné výpočty.",
     ctaPrimary: "Otvoriť model Bratislava →",
-    ctaSecondary: "O projekte",
+    ctaSecondary: "O platforme",
 
     featuredTitle: "Interaktívne štúdie a modely",
     featuredSub: "Vyberte si materiál pre detailnú analýzu a prepočet",
+    cardCta: "Interaktívny prepočet →",
 
     articles: [
       {
         slug: "bratislava",
-        category: "Finance",
+        category: "Financie",
         categoryColor: "#2563eb",
         title: "Investície do nehnuteľností v Bratislave. Výpočet ROI za 5 rokov",
         desc: "Kompletný ekonomický rozbor kúpy 2-izbového bytu: hypotéka, daňový bonus, rekonštrukcia, príjem z prenájmu a čistý zisk.",
@@ -84,7 +85,7 @@ const HOME_CONTENT = {
       },
       {
         slug: "tesla",
-        category: "Technology / Finance",
+        category: "Technológie / Financie",
         categoryColor: "#06b6d4",
         title: "Valuácia spoločnosti Tesla. Interaktívny DCF model",
         desc: "Analýza cash flow spoločnosti Tesla: modelovanie tržieb, FSD, Robotaxi a diskontnej sadzby s prepočtom cieľovej ceny akcií.",
@@ -120,10 +121,11 @@ const HOME_CONTENT = {
     heroLead:
       "Articta transforms financial reports and analytical essays into interactive executable tools. Tweak parameters directly in text and see live recalculations.",
     ctaPrimary: "Open Bratislava Model →",
-    ctaSecondary: "About Articta",
+    ctaSecondary: "About Platform",
 
     featuredTitle: "Featured Interactive Models",
     featuredSub: "Select a research paper to tweak assumptions and analyze live scenarios",
+    cardCta: "Interactive Model →",
 
     articles: [
       {
@@ -138,7 +140,7 @@ const HOME_CONTENT = {
       },
       {
         slug: "tesla",
-        category: "Technology / Finance",
+        category: "Technology & Finance",
         categoryColor: "#06b6d4",
         title: "Tesla Valuation Model. Interactive DCF Breakdown",
         desc: "Cash flow modeling for Tesla: revenue growth, FSD margins, Robotaxi optionality, and discount rate live stock price targets.",
@@ -228,7 +230,7 @@ export default function HomePage() {
               <div className="blog-card-footer">
                 <span>⏱️ {art.readTime}</span>
                 <span>•</span>
-                <span>Интерактивный перерасчет →</span>
+                <span>{content.cardCta}</span>
               </div>
             </Link>
           ))}
