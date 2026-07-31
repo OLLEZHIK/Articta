@@ -4349,3 +4349,124 @@ body {
 .about-secondary-btn:hover {
   background: var(--border-subtle);
 }
+
+/* ===================== Mobile App Native Optimization (PWA & UX) ===================== */
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Prevent auto-zoom on mobile input focus */
+input,
+select,
+textarea,
+button {
+  touch-action: manipulation;
+  font-family: inherit;
+}
+
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  .variable-card-native-input,
+  .report-table-input {
+    font-size: 16px !important; /* Prevents iOS forced zoom */
+  }
+
+  .app-viewport {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+
+  .header-links {
+    display: none !important; /* Hidden on mobile in favor of bottom tab bar */
+  }
+
+  .header-nav {
+    height: 56px;
+  }
+
+  .header-container {
+    padding: 0 1rem;
+  }
+
+  .header-logo-info-badge {
+    display: none; /* Hide badge on mobile header for clean logo */
+  }
+
+  .static-page-container {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .static-title {
+    font-size: 2rem !important;
+  }
+
+  .floating-compare-container {
+    bottom: calc(72px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Native Mobile Bottom Navigation Bar */
+.mobile-bottom-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: rgba(8, 12, 22, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    z-index: 990;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  :root[data-theme="light"] .mobile-bottom-bar {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .mobile-tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    flex: 1;
+    height: 100%;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    transition: color 0.15s ease, transform 0.1s ease;
+  }
+
+  .mobile-tab-item:active {
+    transform: scale(0.94);
+  }
+
+  .mobile-tab-item.active {
+    color: var(--primary);
+  }
+
+  .mobile-tab-item.active svg {
+    stroke: var(--primary);
+  }
+}

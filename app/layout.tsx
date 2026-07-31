@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,9 +15,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fcfcfc" },
+    { media: "(prefers-color-scheme: dark)", color: "#080c16" },
+  ],
+};
+
 export const metadata: Metadata = {
-  title: "Articta — Interactive Financial Analysis",
-  description: "Articta is an interactive analytical platform where users adapt models to their own situation.",
+  title: "Articta — Interactive Financial Analysis & Models",
+  description: "Educational and analytical platform with interactive live models.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Articta",
+  },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export default function RootLayout({
@@ -32,7 +54,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <MobileBottomBar />
+          </ThemeProvider>
         </LanguageProvider>
       </body>
     </html>

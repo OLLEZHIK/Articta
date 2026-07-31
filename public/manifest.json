@@ -1,0 +1,17 @@
+{
+  "name": "Articta — Interactive Financial Platform",
+  "short_name": "Articta",
+  "description": "Educational and analytical platform with interactive live models.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080c16",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
